@@ -1,21 +1,19 @@
 package com.pozharsky.dmitri;
 
-import com.pozharsky.dmitri.parser.LexemeParser;
-import com.pozharsky.dmitri.parser.ParagraphParser;
-import com.pozharsky.dmitri.parser.SentenceParser;
+import com.pozharsky.dmitri.parser.impl.LexemeParser;
+import com.pozharsky.dmitri.parser.impl.ParagraphParser;
+import com.pozharsky.dmitri.parser.impl.SentenceParser;
+import com.pozharsky.dmitri.parser.impl.WordParser;
 import com.pozharsky.dmitri.reader.TextReader;
-
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         TextReader reader = new TextReader();
         String string = reader.readText("data\\text.txt");
         System.out.println(string);
-        LexemeParser lexemeParser = new LexemeParser(null);
+        LexemeParser lexemeParser = new LexemeParser(new WordParser(null));
         SentenceParser sentenceParser = new SentenceParser(lexemeParser);
-        ParagraphParser paragraphParser = new ParagraphParser(string.trim(), sentenceParser);
-        List<String> result = paragraphParser.handleRequest();
-        System.out.println(result);
+        ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
+        paragraphParser.parse(string.trim());
     }
 }

@@ -1,10 +1,12 @@
-package com.pozharsky.dmitri.composite;
+package com.pozharsky.dmitri.composite.impl;
 
-public class ConsonantLetter implements Component {
-    private String letter;
+import com.pozharsky.dmitri.composite.Component;
 
-    public ConsonantLetter(String letter) {
-        this.letter = letter;
+public class Punctuation implements Component {
+    private Character punctuation;
+
+    public Punctuation(Character punctuation) {
+        this.punctuation = punctuation;
     }
 
     @Override
