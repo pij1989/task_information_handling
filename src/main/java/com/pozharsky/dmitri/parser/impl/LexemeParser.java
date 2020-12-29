@@ -1,17 +1,17 @@
 package com.pozharsky.dmitri.parser.impl;
 
+import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public class LexemeParser implements Parser<TextComposite,List<String>> {
+public class LexemeParser implements Parser<Optional<TextComposite>, String> {
     private static final Logger logger = LogManager.getLogger(LexemeParser.class);
-    private static final String SPACE_DELIMITER = "\\s";
+    private static final String SPACE_DELIMITER = " ";
     private WordParser parser;
 
     public LexemeParser(WordParser parser) {
@@ -19,15 +19,20 @@ public class LexemeParser implements Parser<TextComposite,List<String>> {
     }
 
     @Override
-    public TextComposite parse(List<String> sentences) {
+    public Optional<TextComposite> parse(String sentence) {
         if (parser != null) {
-            List<String> lexemes = sentences.stream()
-                    .flatMap(e -> Stream.of(e.trim().split(SPACE_DELIMITER)))
-                    .collect(Collectors.toList());
-            logger.info("Lexemes: " + lexemes);
-            return parser.parse(lexemes);
+            TextComposite textComposite = new TextComposite();
+            Stream.of(sentence.trim().split(SPACE_DELIMITER))
+                    .forEach(e -> {
+                        logger.debug("Lexeme: " + e);
+                        Optional<TextComposite> optionalLexeme = parser.parse(e);
+                        TextComposite lexeme = optionalLexeme.orElseThrow();
+                        textComposite.add(lexeme);
+                        textComposite.add(new Punctuation(SPACE_DELIMITER));
+                    });
+            return Optional.of(textComposite);
         } else {
-            return new TextComposite();
+            return Optional.empty();
         }
     }
 }

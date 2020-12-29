@@ -28,6 +28,14 @@ public class TextComposite implements Component {
     public String buildString() {
         return components.stream()
                 .map(Component::buildString)
-                .collect(Collectors.joining(" "));
+                .collect(Collectors.joining());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TextComposite{");
+        sb.append("components=").append(components);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -1,12 +1,12 @@
 package com.pozharsky.dmitri.parser.impl;
 
+import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ParagraphParser implements Parser<TextComposite, String> {
@@ -21,10 +21,20 @@ public class ParagraphParser implements Parser<TextComposite, String> {
     @Override
     public TextComposite parse(String data) {
         if (parser != null) {
-            List<String> paragraphs = Stream.of(data.split(THREE_SPACE_DELIMITER))
-                    .collect(Collectors.toList());
-            logger.info("Paragraphs: " + paragraphs);
-            return parser.parse(paragraphs);
+            TextComposite textComposite = new TextComposite();
+            Stream.of(data.split(THREE_SPACE_DELIMITER))
+                    .forEach(e -> {
+                        logger.debug("Paragraph: " + e);
+                        Optional<TextComposite> optionalParagraph = parser.parse(e);
+                        TextComposite paragraph = optionalParagraph.orElseThrow();
+                        for (int i = 0; i < 3; i++) {
+                            textComposite.add(new Punctuation(" "));
+                        }
+                        textComposite.add(paragraph);
+                        textComposite.add(new Punctuation("\n"));
+                    });
+            System.out.println(textComposite.buildString());
+            return textComposite;
         } else {
             return new TextComposite();
         }

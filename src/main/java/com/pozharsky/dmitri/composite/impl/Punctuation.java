@@ -3,9 +3,9 @@ package com.pozharsky.dmitri.composite.impl;
 import com.pozharsky.dmitri.composite.Component;
 
 public class Punctuation implements Component {
-    private Character punctuation;
+    private String punctuation;
 
-    public Punctuation(Character punctuation) {
+    public Punctuation(String punctuation) {
         this.punctuation = punctuation;
     }
 
@@ -26,6 +26,14 @@ public class Punctuation implements Component {
 
     @Override
     public String buildString() {
-        return null;
+        return punctuation;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Punctuation{");
+        sb.append("punctuation='").append(punctuation).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
