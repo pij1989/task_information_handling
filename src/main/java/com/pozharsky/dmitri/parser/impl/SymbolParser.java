@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class SymbolParser implements Parser<TextComposite, String> {
     private static final String SYMBOL_PATTERN = "[A-Z_a-z_А-Я_а-я_0-9]";
+    private static final int INDEX = 0;
 
     @Override
     public TextComposite parse(String word) {
@@ -17,7 +18,7 @@ public class SymbolParser implements Parser<TextComposite, String> {
         Matcher matcher = pattern.matcher(word);
         while (matcher.find()){
             String symbol = matcher.group();
-            textComposite.add(new Symbol(symbol));
+            textComposite.add(new Symbol(symbol.charAt(INDEX)));
         }
         return textComposite;
     }

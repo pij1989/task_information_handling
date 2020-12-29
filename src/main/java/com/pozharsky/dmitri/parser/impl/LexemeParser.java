@@ -11,7 +11,8 @@ import java.util.stream.Stream;
 
 public class LexemeParser implements Parser<Optional<TextComposite>, String> {
     private static final Logger logger = LogManager.getLogger(LexemeParser.class);
-    private static final String SPACE_DELIMITER = " ";
+    private static final String SPACE_DELIMITER = "\\s";
+    private static final Character WHITESPACE = ' ';
     private WordParser parser;
 
     public LexemeParser(WordParser parser) {
@@ -28,7 +29,7 @@ public class LexemeParser implements Parser<Optional<TextComposite>, String> {
                         Optional<TextComposite> optionalLexeme = parser.parse(e);
                         TextComposite lexeme = optionalLexeme.orElseThrow();
                         textComposite.add(lexeme);
-                        textComposite.add(new Punctuation(SPACE_DELIMITER));
+                        textComposite.add(new Punctuation(WHITESPACE));
                     });
             return Optional.of(textComposite);
         } else {

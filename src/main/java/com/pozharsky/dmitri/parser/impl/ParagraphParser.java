@@ -9,9 +9,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class ParagraphParser implements Parser<TextComposite, String> {
+public class ParagraphParser implements Parser<Optional<TextComposite>, String> {
     private static final Logger logger = LogManager.getLogger(ParagraphParser.class);
     private static final String THREE_SPACE_DELIMITER = "\\s{3}";
+    private static final Character WHITESPACE = ' ';
+    private static final Character ENTER = '\n';
     private SentenceParser parser;
 
     public ParagraphParser(SentenceParser parser) {
@@ -19,7 +21,7 @@ public class ParagraphParser implements Parser<TextComposite, String> {
     }
 
     @Override
-    public TextComposite parse(String data) {
+    public Optional<TextComposite> parse(String data) {
         if (parser != null) {
             TextComposite textComposite = new TextComposite();
             Stream.of(data.split(THREE_SPACE_DELIMITER))
@@ -28,15 +30,14 @@ public class ParagraphParser implements Parser<TextComposite, String> {
                         Optional<TextComposite> optionalParagraph = parser.parse(e);
                         TextComposite paragraph = optionalParagraph.orElseThrow();
                         for (int i = 0; i < 3; i++) {
-                            textComposite.add(new Punctuation(" "));
+                            textComposite.add(new Punctuation(WHITESPACE));
                         }
                         textComposite.add(paragraph);
-                        textComposite.add(new Punctuation("\n"));
+                        textComposite.add(new Punctuation(ENTER));
                     });
-            System.out.println(textComposite.buildString());
-            return textComposite;
+            return Optional.of(textComposite);
         } else {
-            return new TextComposite();
+            return Optional.empty();
         }
     }
 }

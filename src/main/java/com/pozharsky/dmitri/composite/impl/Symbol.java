@@ -3,9 +3,9 @@ package com.pozharsky.dmitri.composite.impl;
 import com.pozharsky.dmitri.composite.Component;
 
 public class Symbol implements Component {
-    private String symbol;
+    private Character symbol;
 
-    public Symbol(String symbol) {
+    public Symbol(Character symbol) {
         this.symbol = symbol;
     }
 
@@ -26,7 +26,7 @@ public class Symbol implements Component {
 
     @Override
     public String buildString() {
-        return symbol;
+        return Character.toString(symbol);
     }
 
     @Override

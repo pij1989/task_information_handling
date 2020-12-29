@@ -16,6 +16,7 @@ public class WordParser implements Parser<Optional<TextComposite>, String> {
     private static final String WORD_AND_PUNCTUATION_PATTERN_GROUP = "([A-Z_a-z_А-Я_а-я_0-9]+)|([^\\s\\w_А-Яа-я])";
     private static final int FIRST_GROUP = 1;
     private static final int SECOND_GROUP = 2;
+    private static final int INDEX = 0;
     private SymbolParser parser;
 
     public WordParser(SymbolParser parser) {
@@ -38,7 +39,7 @@ public class WordParser implements Parser<Optional<TextComposite>, String> {
                 }
                 if (punctuation != null) {
                     logger.debug("Punctuation: " + punctuation);
-                    textComposite.add(new Punctuation(punctuation));
+                    textComposite.add(new Punctuation(punctuation.charAt(INDEX)));
                 }
             }
             return Optional.of(textComposite);
