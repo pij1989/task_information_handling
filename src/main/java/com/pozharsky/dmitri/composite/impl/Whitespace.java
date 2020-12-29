@@ -4,11 +4,11 @@ import com.pozharsky.dmitri.composite.Component;
 
 import java.util.List;
 
-public class Punctuation implements Component {
-    private Character punctuation;
+public class Whitespace implements Component {
+    private Character whitespace;
 
-    public Punctuation(Character punctuation) {
-        this.punctuation = punctuation;
+    public Whitespace(Character whitespace) {
+        this.whitespace = whitespace;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class Punctuation implements Component {
 
     @Override
     public String buildString() {
-        return Character.toString(punctuation);
+        return Character.toString(whitespace);
     }
 }

@@ -2,6 +2,8 @@ package com.pozharsky.dmitri.composite.impl;
 
 import com.pozharsky.dmitri.composite.Component;
 
+import java.util.List;
+
 public class Symbol implements Component {
     private Character symbol;
 
@@ -25,15 +27,17 @@ public class Symbol implements Component {
     }
 
     @Override
-    public String buildString() {
-        return Character.toString(symbol);
+    public List<Component> getAll() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Symbol{");
-        sb.append("symbol='").append(symbol).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public void setAll(List<Component> components) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String buildString() {
+        return Character.toString(symbol);
     }
 }

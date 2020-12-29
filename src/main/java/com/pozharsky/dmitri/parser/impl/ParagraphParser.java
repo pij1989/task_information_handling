@@ -1,7 +1,7 @@
 package com.pozharsky.dmitri.parser.impl;
 
-import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
+import com.pozharsky.dmitri.composite.impl.Whitespace;
 import com.pozharsky.dmitri.parser.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 public class ParagraphParser implements Parser<Optional<TextComposite>, String> {
     private static final Logger logger = LogManager.getLogger(ParagraphParser.class);
     private static final String THREE_SPACE_DELIMITER = "\\s{3}";
-    private static final Character WHITESPACE = ' ';
     private static final Character ENTER = '\n';
     private SentenceParser parser;
 
@@ -29,11 +28,8 @@ public class ParagraphParser implements Parser<Optional<TextComposite>, String> 
                         logger.debug("Paragraph: " + e);
                         Optional<TextComposite> optionalParagraph = parser.parse(e);
                         TextComposite paragraph = optionalParagraph.orElseThrow();
-                        for (int i = 0; i < 3; i++) {
-                            textComposite.add(new Punctuation(WHITESPACE));
-                        }
                         textComposite.add(paragraph);
-                        textComposite.add(new Punctuation(ENTER));
+                        textComposite.add(new Whitespace(ENTER));
                     });
             return Optional.of(textComposite);
         } else {

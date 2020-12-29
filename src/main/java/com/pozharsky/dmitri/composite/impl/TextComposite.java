@@ -25,17 +25,19 @@ public class TextComposite implements Component {
     }
 
     @Override
+    public List<Component> getAll() {
+        return new ArrayList<>(components);
+    }
+
+    @Override
+    public void setAll(List<Component> components) {
+        this.components = new ArrayList<>(components);
+    }
+
+    @Override
     public String buildString() {
         return components.stream()
                 .map(Component::buildString)
                 .collect(Collectors.joining());
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("TextComposite{");
-        sb.append("components=").append(components);
-        sb.append('}');
-        return sb.toString();
     }
 }

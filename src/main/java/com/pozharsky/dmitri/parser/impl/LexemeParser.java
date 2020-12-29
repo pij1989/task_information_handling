@@ -2,6 +2,7 @@ package com.pozharsky.dmitri.parser.impl;
 
 import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
+import com.pozharsky.dmitri.composite.impl.Whitespace;
 import com.pozharsky.dmitri.parser.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +30,7 @@ public class LexemeParser implements Parser<Optional<TextComposite>, String> {
                         Optional<TextComposite> optionalLexeme = parser.parse(e);
                         TextComposite lexeme = optionalLexeme.orElseThrow();
                         textComposite.add(lexeme);
-                        textComposite.add(new Punctuation(WHITESPACE));
+                        textComposite.add(new Whitespace(WHITESPACE));
                     });
             return Optional.of(textComposite);
         } else {

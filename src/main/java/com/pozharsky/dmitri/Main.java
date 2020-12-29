@@ -1,9 +1,12 @@
 package com.pozharsky.dmitri;
 
+import com.pozharsky.dmitri.comparator.ComponentComparator;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.impl.*;
 import com.pozharsky.dmitri.reader.TextReader;
+import com.pozharsky.dmitri.service.TextCompositeService;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class Main {
@@ -16,6 +19,9 @@ public class Main {
         ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
         Optional<TextComposite> optional = paragraphParser.parse(string.trim());
         TextComposite textComposite = optional.orElseThrow();
+        System.out.println(textComposite.buildString());
+        TextCompositeService textCompositeService = new TextCompositeService();
+        textCompositeService.sortParagraphBySentenceAmount(textComposite, ComponentComparator.SENTENCE_AMOUNT);
         System.out.println(textComposite.buildString());
     }
 }
