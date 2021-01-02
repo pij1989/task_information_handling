@@ -6,7 +6,6 @@ import com.pozharsky.dmitri.parser.impl.*;
 import com.pozharsky.dmitri.reader.TextReader;
 import com.pozharsky.dmitri.service.TextCompositeService;
 
-import java.io.IOException;
 import java.util.Optional;
 
 public class Main {

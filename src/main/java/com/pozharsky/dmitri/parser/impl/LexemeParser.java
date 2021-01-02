@@ -1,6 +1,5 @@
 package com.pozharsky.dmitri.parser.impl;
 
-import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.composite.impl.Whitespace;
 import com.pozharsky.dmitri.parser.Parser;
