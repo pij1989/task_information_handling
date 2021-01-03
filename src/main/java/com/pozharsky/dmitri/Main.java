@@ -1,11 +1,13 @@
 package com.pozharsky.dmitri;
 
 import com.pozharsky.dmitri.comparator.ComponentComparator;
+import com.pozharsky.dmitri.composite.Component;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.impl.*;
 import com.pozharsky.dmitri.reader.TextReader;
 import com.pozharsky.dmitri.service.TextCompositeService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Main {
@@ -19,8 +21,12 @@ public class Main {
         Optional<TextComposite> optional = paragraphParser.parse(string.trim());
         TextComposite textComposite = optional.orElseThrow();
         System.out.println(textComposite.buildString());
+        System.out.println();
         TextCompositeService textCompositeService = new TextCompositeService();
         textCompositeService.sortParagraphBySentenceAmount(textComposite, ComponentComparator.SENTENCE_AMOUNT);
         System.out.println(textComposite.buildString());
+        System.out.println();
+        List<Component>list = textCompositeService.findSentenceWithMaxLengthWord(textComposite);
+        list.forEach(e -> System.out.println(e.buildString()));
     }
 }

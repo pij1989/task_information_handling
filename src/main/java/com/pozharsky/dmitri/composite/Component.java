@@ -13,5 +13,7 @@ public interface Component {
 
     void setAll(List<Component> components);
 
+    int length();
+
     String buildString();
 }

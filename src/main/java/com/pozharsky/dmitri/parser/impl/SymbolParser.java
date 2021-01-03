@@ -1,5 +1,6 @@
 package com.pozharsky.dmitri.parser.impl;
 
+import com.pozharsky.dmitri.composite.TextType;
 import com.pozharsky.dmitri.composite.impl.Symbol;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.Parser;
@@ -13,7 +14,7 @@ public class SymbolParser implements Parser<TextComposite, String> {
 
     @Override
     public TextComposite parse(String word) {
-        TextComposite textComposite = new TextComposite();
+        TextComposite textComposite = new TextComposite(TextType.WORD);
         Pattern pattern = Pattern.compile(SYMBOL_PATTERN);
         Matcher matcher = pattern.matcher(word);
         while (matcher.find()){

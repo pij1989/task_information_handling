@@ -1,5 +1,6 @@
 package com.pozharsky.dmitri.parser.impl;
 
+import com.pozharsky.dmitri.composite.TextType;
 import com.pozharsky.dmitri.composite.impl.Punctuation;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.Parser;
@@ -25,7 +26,7 @@ public class WordParser implements Parser<Optional<TextComposite>, String> {
     @Override
     public Optional<TextComposite> parse(String lexeme) {
         if (parser != null) {
-            TextComposite textComposite = new TextComposite();
+            TextComposite textComposite = new TextComposite(TextType.LEXEME);
             Pattern pattern = Pattern.compile(WORD_AND_PUNCTUATION_PATTERN_GROUP);
             Matcher matcher = pattern.matcher(lexeme.trim());
             while (matcher.find()) {

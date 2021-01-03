@@ -37,7 +37,20 @@ public class Punctuation implements Component {
     }
 
     @Override
+    public int length() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String buildString() {
         return Character.toString(punctuation);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Punctuation{");
+        sb.append("punctuation=").append(punctuation);
+        sb.append('}');
+        return sb.toString();
     }
 }

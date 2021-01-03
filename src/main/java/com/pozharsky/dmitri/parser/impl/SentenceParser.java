@@ -1,5 +1,6 @@
 package com.pozharsky.dmitri.parser.impl;
 
+import com.pozharsky.dmitri.composite.TextType;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
 import com.pozharsky.dmitri.parser.Parser;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,7 @@ public class SentenceParser implements Parser<Optional<TextComposite>, String> {
     @Override
     public Optional<TextComposite> parse(String paragraph) {
         if (parser != null) {
-            TextComposite textComposite = new TextComposite();
+            TextComposite textComposite = new TextComposite(TextType.PARAGRAPH);
             Pattern pattern = Pattern.compile(SENTENCE_PATTERN);
             Matcher matcher = pattern.matcher(paragraph);
             while (matcher.find()) {

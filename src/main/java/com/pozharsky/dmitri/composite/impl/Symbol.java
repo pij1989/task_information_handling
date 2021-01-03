@@ -37,7 +37,20 @@ public class Symbol implements Component {
     }
 
     @Override
+    public int length() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String buildString() {
         return Character.toString(symbol);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Symbol{");
+        sb.append("symbol=").append(symbol);
+        sb.append('}');
+        return sb.toString();
     }
 }
