@@ -8,6 +8,7 @@ import com.pozharsky.dmitri.reader.TextReader;
 import com.pozharsky.dmitri.service.TextCompositeService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Main {
@@ -23,10 +24,16 @@ public class Main {
         System.out.println(textComposite.buildString());
         System.out.println();
         TextCompositeService textCompositeService = new TextCompositeService();
-        textCompositeService.sortParagraphBySentenceAmount(textComposite, ComponentComparator.SENTENCE_AMOUNT);
+        /*textCompositeService.sortParagraphBySentenceAmount(textComposite, ComponentComparator.SENTENCE_AMOUNT);
+        System.out.println(textComposite.buildString());
+        System.out.println();*/
+        /*List<Component>list = textCompositeService.findSentenceWithMaxLengthWord(textComposite);
+        list.forEach(e -> System.out.println(e.buildString()));*/
+       /* List<Component>removeSentences = textCompositeService.removeSentencesAmountWordLess(textComposite,18);
         System.out.println(textComposite.buildString());
         System.out.println();
-        List<Component>list = textCompositeService.findSentenceWithMaxLengthWord(textComposite);
-        list.forEach(e -> System.out.println(e.buildString()));
+        removeSentences.forEach(e -> System.out.println(e.buildString()));*/
+        Map<String,Integer> result = textCompositeService.defineAmountSameWord(textComposite);
+        System.out.println(result);
     }
 }
