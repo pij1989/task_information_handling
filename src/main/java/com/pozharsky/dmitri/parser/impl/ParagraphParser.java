@@ -22,7 +22,7 @@ public class ParagraphParser implements Parser<Optional<TextComposite>, String> 
     public Optional<TextComposite> parse(String data) {
         if (parser != null) {
             TextComposite textComposite = new TextComposite(TextType.TEXT);
-            Stream.of(data.split(THREE_SPACE_DELIMITER))
+            Stream.of(data.trim().split(THREE_SPACE_DELIMITER))
                     .forEach(e -> {
                         logger.debug("Paragraph: " + e);
                         Optional<TextComposite> optionalParagraph = parser.parse(e);
