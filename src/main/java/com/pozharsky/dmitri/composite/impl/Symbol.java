@@ -45,12 +45,4 @@ public class Symbol implements Component {
     public String buildString() {
         return Character.toString(symbol);
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Symbol{");
-        sb.append("symbol=").append(symbol);
-        sb.append('}');
-        return sb.toString();
-    }
 }

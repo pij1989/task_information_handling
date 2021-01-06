@@ -3,11 +3,16 @@ package com.pozharsky.dmitri.service;
 import com.pozharsky.dmitri.comparator.ComponentComparator;
 import com.pozharsky.dmitri.composite.Component;
 import com.pozharsky.dmitri.composite.impl.TextComposite;
+import com.pozharsky.dmitri.validator.SymbolValidator;
+import com.pozharsky.dmitri.validator.impl.ConsonantValidator;
+import com.pozharsky.dmitri.validator.impl.VowelValidator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class TextCompositeService {
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
 
     public void sortParagraphBySentenceAmount(Component textComposite, Comparator<Component> componentComparator) {
         List<Component> paragraphs = textComposite.getAll();
@@ -55,27 +60,35 @@ public class TextCompositeService {
                         int count = result.get(wordLowerCase);
                         result.put(wordLowerCase, ++count);
                     } else {
-                        result.put(wordLowerCase, 1);
+                        result.put(wordLowerCase, ONE);
                     }
                 }
             }
         }
         return result.entrySet().stream()
-                .filter(e -> e.getValue() != 1)
+                .filter(e -> e.getValue() != ONE)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public int defineAmountVowels(Component textComposite) {
+        return defineAmountSymbol(textComposite, VowelValidator.INSTANCE);
+    }
+
+    public int defineAmountConsonants(Component textComposite) {
+        return defineAmountSymbol(textComposite, ConsonantValidator.INSTANCE);
     }
 
     private List<Component> findMaxWordSentences(List<Component> sentences) {
         List<Component> maxWordSentences = new LinkedList<>();
-        int maxWordLength = 0;
-        int count = 0;
+        int maxWordLength = ZERO;
+        int count = ZERO;
         for (Component sentence : sentences) {
             Component component = findMaxWordInSentence(sentence).orElseThrow();
             int wordLength = component.length();
             if (wordLength > maxWordLength) {
                 maxWordLength = wordLength;
                 if (!maxWordSentences.isEmpty()) {
-                    while (count > 0) {
+                    while (count > ZERO) {
                         maxWordSentences.remove(--count);
                     }
                 }
@@ -103,5 +116,26 @@ public class TextCompositeService {
                 .flatMap(e -> e.getAll().stream())
                 .filter(e -> e instanceof TextComposite)
                 .collect(Collectors.toList());
+    }
+
+    private int defineAmountSymbol(Component textComposite, SymbolValidator validator) {
+        int count = ZERO;
+        List<Component> paragraphs = textComposite.getAll();
+        for (Component paragraph : paragraphs) {
+            List<Component> sentences = paragraph.getAll();
+            for (Component sentence : sentences) {
+                List<Component> words = sentenceWithoutPunctuation(sentence);
+                for (Component word : words) {
+                    List<Component> symbols = word.getAll();
+                    for (Component symbol : symbols) {
+                        String letter = symbol.buildString();
+                        if (validator.validate(letter)) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
     }
 }

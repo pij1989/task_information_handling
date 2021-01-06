@@ -45,12 +45,4 @@ public class Punctuation implements Component {
     public String buildString() {
         return Character.toString(punctuation);
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Punctuation{");
-        sb.append("punctuation=").append(punctuation);
-        sb.append('}');
-        return sb.toString();
-    }
 }

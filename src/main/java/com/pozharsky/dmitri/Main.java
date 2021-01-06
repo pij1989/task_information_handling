@@ -15,10 +15,8 @@ public class Main {
     public static void main(String[] args) {
         TextReader reader = new TextReader();
         String string = reader.readText("data\\text.txt");
-        //System.out.println(string);
-        LexemeParser lexemeParser = new LexemeParser(new WordParser(new SymbolParser()));
-        SentenceParser sentenceParser = new SentenceParser(lexemeParser);
-        ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
+        System.out.println(string);
+        ParagraphParser paragraphParser = new ParagraphParser(new SentenceParser(new LexemeParser(new WordParser(new SymbolParser()))));
         Optional<TextComposite> optional = paragraphParser.parse(string.trim());
         TextComposite textComposite = optional.orElseThrow();
         System.out.println(textComposite.buildString());
@@ -26,14 +24,18 @@ public class Main {
         TextCompositeService textCompositeService = new TextCompositeService();
         /*textCompositeService.sortParagraphBySentenceAmount(textComposite, ComponentComparator.SENTENCE_AMOUNT);
         System.out.println(textComposite.buildString());
-        System.out.println();*/
-        /*List<Component>list = textCompositeService.findSentenceWithMaxLengthWord(textComposite);
-        list.forEach(e -> System.out.println(e.buildString()));*/
-       /* List<Component>removeSentences = textCompositeService.removeSentencesAmountWordLess(textComposite,18);
+        System.out.println(textComposite.get(0));*/
+       /* List<Component>list = textCompositeService.findSentenceWithMaxLengthWord(textComposite);
+        list.forEach(e -> System.out.println(e.buildString()));
+        List<Component>removeSentences = textCompositeService.removeSentencesAmountWordLess(textComposite,5);
         System.out.println(textComposite.buildString());
         System.out.println();
         removeSentences.forEach(e -> System.out.println(e.buildString()));*/
-        Map<String,Integer> result = textCompositeService.defineAmountSameWord(textComposite);
-        System.out.println(result);
+        /*Map<String,Integer> result = textCompositeService.defineAmountSameWord(textComposite);
+        System.out.println(result);*/
+        int amountVowels = textCompositeService.defineAmountVowels(textComposite);
+        int amountConsonant = textCompositeService.defineAmountConsonants(textComposite);
+        System.out.println(amountVowels);
+        System.out.println(amountConsonant);
     }
 }

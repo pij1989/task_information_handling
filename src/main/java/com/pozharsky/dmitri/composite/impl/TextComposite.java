@@ -83,9 +83,4 @@ public class TextComposite implements Component {
                 .map(Component::buildString)
                 .collect(Collectors.joining(delimiter));
     }
-
-    @Override
-    public String toString() {
-        return components.toString();
-    }
 }

@@ -98,4 +98,18 @@ public class TextCompositeServiceTest {
         Map<String, Integer> expect = map;
         assertEquals(actual, expect);
     }
+
+    @Test
+    public void testDefineAmountVowels() {
+        int actual = service.defineAmountVowels(composite);
+        int expect = 250;
+        assertEquals(actual, expect);
+    }
+
+    @Test
+    public void testDefineAmountConsonants() {
+        int actual = service.defineAmountConsonants(composite);
+        int expect = 367;
+        assertEquals(actual, expect);
+    }
 }
